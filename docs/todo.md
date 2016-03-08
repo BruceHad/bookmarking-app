@@ -1,0 +1,22 @@
+- [ ] Reading
+    - [ ] Node App Deployment
+        - [X] Install Node on host.
+        - [ ] Upload sample app to check it's working. 
+    - [x] MongoDb
+    - [x] SQLite
+    - [ ] API Design
+        - [x] http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+- [ ] "App"
+    - [x] Form
+    - [x] Autofill URL field
+        - [x] http://
+        - [x] clipboard (doesn't work, security concerns)
+    - [ ] DB store
+    - [ ] API
+        - [x] Recent
+        - [ ] Categories
+        - [ ] Monthly
+- [ ] User Login
+- [ ] Treerock "Linkblog"
+    - [x] Start Template for TR projects
+    - [ ] 

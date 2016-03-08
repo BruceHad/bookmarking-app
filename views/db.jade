@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  div(id="main")
+    if loggedIn
+      h2 The DB&hellip;
+      table(class="table-db")
+        tr
+          th Link
+          th Name
+          th Description
+          th Category
+          th Date
+        each row in rows
+          tr
+            each value in row
+              td= value
+

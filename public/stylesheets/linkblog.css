@@ -1,0 +1,36 @@
+#main {
+  color: #181b21;
+  max-width: 620px;
+  margin: 0 auto; }
+
+/* Linkblog Form
+------------------------------------------------------------*/
+form fieldset {
+  margin: 5px 0;
+  padding: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px; }
+
+form input {
+  display: block; }
+
+form input[type="text"], form input[type="url"] {
+  width: 100%;
+  line-height: 2em;
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px; }
+
+form input[type="submit"] {
+  color: inherit; }
+
+.simple-form label {
+  display: none; }
+
+/* DB Table
+--------------------------------------------------------------------*/
+.table-db td, .table-db th {
+  border: 1px solid #656f86;
+  padding: 2px 4px;
+  background-color: white; }

@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/linkblog.css')
+    script(src='/javascripts/linkblog-min.js')
+  body
+    header(class='clearfix')
+      h1(id='h-dimin') tr
+      h1(id='h-full', class='hidden') treerock
+      nav(id='header-nav' class='hidden clearfix')
+        li
+          a(href='#') home
+        li
+          a(href='#') github
+      h2 linkblog
+
+    block content
