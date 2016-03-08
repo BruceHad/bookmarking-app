@@ -1,7 +1,8 @@
 - [ ] Reading
     - [ ] Node App Deployment
-        - [X] Install Node on host.
-        - [ ] Upload sample app to check it's working. 
+        - [x] Install Node on host.
+        - [x] Deploy Node app on Heroku.
+        - [ ] Read
     - [x] MongoDb
     - [x] SQLite
     - [ ] API Design
@@ -11,12 +12,13 @@
     - [x] Autofill URL field
         - [x] http://
         - [x] clipboard (doesn't work, security concerns)
-    - [ ] DB store
+    - [x] DB store
     - [ ] API
         - [x] Recent
         - [ ] Categories
         - [ ] Monthly
-- [ ] User Login
-- [ ] Treerock "Linkblog"
-    - [x] Start Template for TR projects
-    - [ ] 
+    - [ ] Deploy
+        - [x] Upload sample app to check it's working. 
+        - [x] Upload App
+        - [x] Update App and redeploy
+    - [ ] User Login
