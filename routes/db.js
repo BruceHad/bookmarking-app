@@ -1,19 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('trlbdb');
+var pg = require('pg');
+pg.defaults.ssl = true;
+var connectionString = process.env.DATABASE_URL;
 
-var sql = "\
-SELECT \
-  links.url, \
-  links.name, \
-  links.description, \
-  links.category, \
-  links.date \
-FROM links \
-ORDER BY links.date desc \
-LIMIT 10 \
-";
+
 
 /* GET db info. */
 router.get('/', function(req, res, next) {
@@ -21,16 +12,24 @@ router.get('/', function(req, res, next) {
   data.title = "tr/lb";
   data.loggedIn = true;
 
-  db.all(sql, function(err, rows){
-        if(err) console.error(err);
-        else {
-          data.rows = rows;
-          console.log(rows);
-          res.render('db', data);
-        }
+  var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
+FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
+  pg.connect(connectionString, function(err, client) {
+    if (err) console.error(err);
+    else {
+      client
+      .query(sql)
+      .on('row', function(row, result) {
+        result.addRow(row);
+      })
+      .on('end', function(result) {
+        data.rows = result.rows;
+        // console.log(result.rows);
+        console.log(result.rows.length + ' rows were received');
+        res.render('db', data);
+      });
+    }
   });
-
-
 });
 
 module.exports = router;

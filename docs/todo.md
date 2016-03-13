@@ -5,20 +5,23 @@
         - [ ] Read
     - [x] MongoDb
     - [x] SQLite
+    - [x] Postgres
     - [ ] API Design
         - [x] http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
-- [ ] "App"
-    - [x] Form
-    - [x] Autofill URL field
-        - [x] http://
-        - [x] clipboard (doesn't work, security concerns)
-    - [x] DB store
-    - [ ] API
-        - [x] Recent
-        - [ ] Categories
-        - [ ] Monthly
-    - [ ] Deploy
-        - [x] Upload sample app to check it's working. 
-        - [x] Upload App
-        - [x] Update App and redeploy
-    - [ ] User Login
+- [x] Form
+- [x] Autofill URL field
+    - [x] http://
+    - [x] clipboard (doesn't work, security concerns)
+- [x] <del>DB store</del>
+- [ ] Switch to 6Postgress
+- [ ] API
+    - [x] Recent
+    - [ ] Categories
+    - [ ] Monthly
+- [ ] Deploy
+    - [x] Upload sample app to check it's working. 
+    - [x] Upload App
+    - [x] Update App and redeploy
+- [ ] User Login
+- [ ] Favicon
+- [ ] 
