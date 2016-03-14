@@ -1,4 +1,4 @@
-# Linkblog
+# Bookmarking App
 
 February 2016
 

@@ -2,7 +2,6 @@
     - [ ] Node App Deployment
         - [x] Install Node on host.
         - [x] Deploy Node app on Heroku.
-        - [ ] Read
     - [x] MongoDb
     - [x] SQLite
     - [x] Postgres
@@ -13,7 +12,7 @@
     - [x] http://
     - [x] clipboard (doesn't work, security concerns)
 - [x] <del>DB store</del>
-- [ ] Switch to 6Postgress
+- [x] Switch to Postgress
 - [ ] API
     - [x] Recent
     - [ ] Categories
