@@ -3,7 +3,6 @@
 After looking at MongoDB and SQLite, it seems that postgres will be the simpler choice for deployment purposes, as that seems to be the default add-on for Heroku.
 
 https://devcenter.heroku.com/articles/heroku-postgresql
-http://12factor.net/dev-prod-parity
 
 PostreSQL (postgres) is an object-relational database management system, which is similar to a relational database but with a OO database model (objects, classes and inheritance is supported in the db and query language).
 
@@ -28,9 +27,11 @@ Once Heroku Postgres has been added a DATABASE_URL or HEROKU_POSTGRESQL_COLOR_UR
 
 ## Local Setup
 
-Heroky recommends running the same database locally during development as in production.
+Heroku recommends running the same database locally during development as in production.
 
-Install node:
+Install Postgres:
+
+https://www.howtoforge.com/tutorial/postgresql-on-ubuntu-15-04/
 
     sudo apt-get install postgresql postgresql-contrib
     which psql
@@ -40,17 +41,22 @@ Also install pgadmin:
 
     sudo apt-get install pgadmin3
 
+PG uses _role_ for authentication and authorisation, similar to unix permissions. By default, it creates a new user called postgres. You need to log in to that account:
+
+    sudo su
+    su - postgres
+
+This switches you first to the root user, then the postgres user.
+
 Then we need to set the password for the postgres user role (called "postgres"), to allow us to access the server externally.
 
-    sudo -u postgres psql postgres
+    psql
     psql (9.3.11)
-    postgres=# 
-
-Connected to postgres. Set the password:
-
-    \password postgres
-
-Ctrl-D or \q exits.
+    postgres=#  \password postgres
+    ENTER YOUR PASSWORD
+    \q
+    exit
+    exit
 
 Now active addon for pgAdmin.
 
@@ -77,6 +83,7 @@ Then heroku recommends set the environment variable.
 But this didn't work for me, as I need a user and password to log in to the database.
 
     export DATABASE_URL=postgres://you:password@localhost:5432/localherokudb
+    export DATABASE_URL=postgres://treerock:treerock@localhost:5432/localherokudb
 
 Note this may need repeating every time, or you can set it up by default.
 

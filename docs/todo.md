@@ -1,5 +1,5 @@
 - [ ] Reading
-    - [ ] Node App Deployment
+    - [x] Node App Deployment
         - [x] Install Node on host.
         - [x] Deploy Node app on Heroku.
     - [x] MongoDb
@@ -17,10 +17,10 @@
     - [x] Recent
     - [ ] Categories
     - [ ] Monthly
-- [ ] Deploy
+- [x] Deploy
     - [x] Upload sample app to check it's working. 
     - [x] Upload App
     - [x] Update App and redeploy
 - [ ] User Login
 - [ ] Favicon
-- [ ] 
+- [ ] Cross Origin Requests
