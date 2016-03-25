@@ -25,13 +25,5 @@
             shown = false;
         }
 
-        // URL
-
-        var urlField = document.querySelector("input[type='URL']");
-        console.log(urlField);
-        urlField.value = "http://";
-        urlField.selectionStart = 0;
-        urlField.selectionEnd = 7;
-
     });
 })(window, document);
