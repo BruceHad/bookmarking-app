@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
   var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
 FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
-  pg.connect(connectionString, function(err, client) {
+  pg.connect(connectionString, function(err, client, done) {
     if (err) console.error(err);
     else {
       client
@@ -29,6 +29,7 @@ FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
         res.render('db', data);
       });
     }
+    done();
   });
 });
 

@@ -18,21 +18,19 @@ router.get('/', function(req, res, next) {
 
 /* GET recent listing. */
 router.get('/recent', function(req, res, next) {
-  pg.connect(connectionString, function(err, client) {
-    if (err) console.error(err);
-    else {
+  pg.connect(connectionString, function(err, client, done) {
+    if (!err) {
       console.log("Connected");
-      console.log("Client");
-      client
-      .query(sqlRecent)
+      client.query(sqlRecent)
       .on('row', function(row, result) {
         result.addRow(row);
       })
       .on('end', function(result) {
         console.log(result.rows.length + ' rows were received');
-        res.send(JSON.stringify(result.rows))
+        res.send(JSON.stringify(result.rows));
       });
     }
+    done();
   });
 });
 
