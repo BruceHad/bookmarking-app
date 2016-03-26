@@ -187,6 +187,10 @@ Also, the connection string is exposed as a config var for your app:
 
 Express Generator set up a base project. I only need a single page which contains a form with URL, Name, Description, Category and Tags.
 
+## Postgress and Node
+
+https://github.com/brianc/node-postgres
+
 ## CORS
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS

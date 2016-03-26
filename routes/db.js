@@ -6,11 +6,9 @@ var connectionString = process.env.DATABASE_URL;
 
 
 
-/* GET db info. */
+/* GET db info (recent) */
 router.get('/', function(req, res, next) {
-  var data = {};
-  data.title = "tr/lb";
-  data.loggedIn = true;
+  var data = {title: "tr/lb", loggedIn: true};
 
   var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
 FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
@@ -19,17 +17,36 @@ FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
     else {
       client
       .query(sql)
-      .on('row', function(row, result) {
-        result.addRow(row);
+      .on('row', function(row, results) {
+        results.addRow(row);
       })
-      .on('end', function(result) {
-        data.rows = result.rows;
-        // console.log(result.rows);
-        console.log(result.rows.length + ' rows were received');
+      .on('end', function(results) {
+        data.rows = results.rows;
+        console.log(results.rows.length + ' rows were received');
         res.render('db', data);
       });
     }
     done();
+  });
+});
+
+/* GET categories */
+router.get('/categories', function(req, res, next){
+  var data = {title: "tr/lb", loggedIn: true};
+  var sql = "SELECT category, '../api/category/'||lower(category) as link, count(*) FROM bookmarks GROUP BY category ORDER BY category";
+  pg.connect(connectionString, function(err, client, done){
+    if(err) console.error(err);
+    if(client){
+      client.query(sql, function(err, results){
+        done();
+        if(err) console.err(err);
+        else{
+          data.rows = results.rows;
+          console.log(results.rows);
+          res.render('categories', data);
+        }
+      });
+    }
   });
 });
 
