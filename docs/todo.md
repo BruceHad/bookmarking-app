@@ -13,10 +13,10 @@
     - [x] clipboard (doesn't work, security concerns)
 - [x] <del>Connect to DB (SQLite)</del>
 - [x] Switch to Postgress for DB
-- [ ] Develop simple API for requests
+- [x] Develop simple API for requests
     - [x] Recent bookmarks
     - [x] Recent by Categories
-    - [ ] Monthly
+    - [x] Monthly
 - [x] Deploy
     - [x] Upload sample app to check it's working. 
     - [x] Upload App
