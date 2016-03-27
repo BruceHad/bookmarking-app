@@ -33,13 +33,13 @@ FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
 /* GET categories */
 router.get('/categories', function(req, res, next){
   var data = {title: "tr/lb", loggedIn: true};
-  var sql = "SELECT category, '../api/category/'||lower(category) as link, count(*) FROM bookmarks GROUP BY category ORDER BY category";
+  var sql = "SELECT category, '../api/category/'||lower(category) as link, count(*) FROM bookmarks GROUP BY category ORDER BY category;";
   pg.connect(connectionString, function(err, client, done){
     if(err) console.error(err);
     if(client){
       client.query(sql, function(err, results){
         done();
-        if(err) console.err(err);
+        if(err) console.error(err);
         else{
           data.rows = results.rows;
           console.log(results.rows);
@@ -48,6 +48,25 @@ router.get('/categories', function(req, res, next){
       });
     }
   });
+});
+
+/* GET Months */
+router.get('/months', function(req, res, next){
+  var data = {title: "tr/lb", loggedIn: true};
+  var sql = "SELECT DISTINCT substring(bookmark_date from 0 for 8) bookmark_month,'../api/month/'||substring(bookmark_date from 0 for 5)||'/'||substring(bookmark_date from 6 for 2) link FROM bookmarks ORDER BY substring(bookmark_date from 0 for 8);";
+  pg.connect(connectionString, function(err, client, done){
+    if(err) console.error(err);
+    if(client){
+      client.query(sql, function(err, results){
+        done();
+        if(err) console.error(err);
+        else{
+          data.rows = results.rows;
+          res.render('months', data);
+        }
+      });
+    }
+  })
 });
 
 module.exports = router;

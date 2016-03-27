@@ -48,6 +48,45 @@ router.get('/category/:cat', function(req, res, next){
 });
 
 /* Get Monthly Listing */
+router.get('/month/:year/:month', function(req, res, next){
+  console.log(req.params);
+  var year = req.params.year, month = req.params.month;
+  var sql = "SELECT * FROM bookmarks WHERE substring(bookmark_date from 0 for 5) = '"+year+"' AND substring(bookmark_date from 6 for 2) = '"+month+"';";
+  console.log(sql);
+  pg.connect(connectionString, function(err, client, done){
+    if(err) console.error(err);
+    else{
+      client.query(sql, function(err, results){
+        done();
+        if(err) console.error(err);
+        else{
+          console.log(results.rows.length + ' rows were received');
+          res.send(JSON.stringify(results.rows));
+        }
+      });
+    }
+  })
+});
+
+/* Get Monthly Listing */
+router.get('/all_months', function(req, res, next){
+  var year = req.params.year, month = req.params.month;
+  var sql = "SELECT DISTINCT substring(bookmark_date from 0 for 8) bookmark_month FROM bookmarks ORDER BY substring(bookmark_date from 0 for 8);";
+  pg.connect(connectionString, function(err, client, done){
+    if(err) console.error(err);
+    else{
+      client.query(sql, function(err, results){
+        done();
+        if(err) console.error(err);
+        else{
+          console.log(results.rows.length + ' rows were received');
+          res.send(JSON.stringify(results.rows));
+        }
+      });
+    }
+  })
+});
+
 
 
 module.exports = router;

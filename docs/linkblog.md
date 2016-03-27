@@ -21,6 +21,7 @@ This information is then stored in the database. The web API provides a few endp
 - /recent -- the most recent n links bookmarked.
 - /category/catname -- the most recent n links in the catname category
 - /monthly?year=2006&month=01 -- all links bookmarked in January 2016.
+- /all_months -- Provide a list of available months
 
 ## Deployment
 
