@@ -6,15 +6,6 @@ var connectionString = process.env.DATABASE_URL;
 
 
 
-/* API Home Page */
-router.get('/', function(req, res, next) {
-  var data = {};
-  data.title = "tr/lb";
-  data.loggedIn = true;
-  res.render('api', data);
-
-});
-
 /* GET recent listing. */
 router.get('/recent', function(req, res, next) {
   var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
@@ -55,5 +46,8 @@ router.get('/category/:cat', function(req, res, next){
     }
   })
 });
+
+/* Get Monthly Listing */
+
 
 module.exports = router;

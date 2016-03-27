@@ -5,22 +5,26 @@
     - [x] MongoDb
     - [x] SQLite
     - [x] Postgres
-    - [ ] API Design
-        - [x] http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
-- [x] Form
+    - [x] API Design
+    - [ ] How to test?
+- [x] Get basic 'bookmarking' form up
 - [x] Autofill URL field
     - [x] http://
     - [x] clipboard (doesn't work, security concerns)
-- [x] <del>DB store</del>
-- [x] Switch to Postgress
-- [ ] API
-    - [x] Recent
-    - [ ] Categories
+- [x] <del>Connect to DB (SQLite)</del>
+- [x] Switch to Postgress for DB
+- [ ] Develop simple API for requests
+    - [x] Recent bookmarks
+    - [x] Recent by Categories
     - [ ] Monthly
 - [x] Deploy
     - [x] Upload sample app to check it's working. 
     - [x] Upload App
     - [x] Update App and redeploy
+    - [x] Copy remote postgres to local, keep in sync
 - [ ] User Login
-- [ ] Favicon
-- [ ] Cross Origin Requests
+- [ ] Bugs
+    - [ ] Fix Favicon
+    - [x] Allow Cross Origin Requests
+- [ ] Basic CRUD tools (optional)
+- [ ] Automate Testing
