@@ -142,14 +142,20 @@ Now you can copy the database from Heroku locally.
 
     heroku pg:pull DATABASE_URL localherokudb --app appname
 
-Then heroku recommends set the environment variable.
+You can also do the same in reverse - push the local database to the remote.
+
+First you have to drop the remote database, then use pg:push.
+
+  heroku pg:reset DATABASE_URL --app desolate-lowlands-22051
+  PGUSER=user PGPASSWORD=password heroku pg:push mydb DATABASE_URL --app desolate-lowlands-22051 
+
+Heroku recommends set the environment variable.
 
     export DATABASE_URL=postgres:///$(whoami)
 
 But this didn't work for me, as I need a user and password to log in to the database.
 
-    export DATABASE_URL=postgres://you:password@localhost:5432/localherokudb
-    export DATABASE_URL=postgres://treerock:treerock@localhost:5432/localherokudb
+    export DATABASE_URL=postgres://you:password@localhost:5432/mydb
 
 Note this may need repeating every time, or you can set it up by default.
 
