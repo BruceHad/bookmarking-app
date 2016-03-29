@@ -4,6 +4,8 @@ February 2016
 
 _(Learning Project)_
 
+NodeJS Bookmarking application that stores links in a Postgres database and provides JSON API for accessing the data.
+
 ## Application:
 
 An application for 'bookmarking' webpage links and displaying those links as a form of ['linkblog'](https://en.wikipedia.org/wiki/Linklog).
@@ -19,15 +21,15 @@ The bookmarking app is a NodeJS, Express application. The main interface allows 
 ## Objectives:
 
 - <del>Learn about MongoDB and 'NoSQL' type storage.</del>
-- Learn about Databases in Node.js
-- Learn about debloying NodeJS applications.
+- Learn about Databases in Node.js (Postgres)
+- Learn about deploying NodeJS applications (Heroku).
 - Learn API design and usage.
 
 ## Technologies:
 
 - Javascript
-    - NodeJS
-    - Express
-- SQLite
+- NodeJS
+- Express
+- Postgres
 - APIs
 - Heroku
