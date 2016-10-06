@@ -1,11 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// var sqlite3 = require('sqlite3').verbose();
-// var db = new sqlite3.Database(  'http://treerock.me/trlbdb');
-
-// db.serialize(function(){
-//   db.run('CREATE TABLE IF NOT EXISTS links (url text, name text, description text, category text, date text)');
-// });
 var pg = require('pg');
 pg.defaults.ssl = true;
 var connectionString = process.env.DATABASE_URL;
@@ -13,7 +7,7 @@ var connectionString = process.env.DATABASE_URL;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var data = {};
-  data.title = "tr/lb";
+  data.title = "Bookmarks";
   data.loggedIn = true;
   res.render('index', data);
 });

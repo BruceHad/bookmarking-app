@@ -1,7 +1,26 @@
-#main {
-  color: #181b21;
-  max-width: 620px;
-  margin: 0 auto; }
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; 
+}
+
+* html .clearfix {
+  zoom: 1; 
+}
+
+/* IE6 */
+*:first-child + html .clearfix {
+  zoom: 1; 
+}
 
 /* Linkblog Form
 ------------------------------------------------------------*/

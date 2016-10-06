@@ -14,11 +14,5 @@
     "morgan": "~1.6.1",
     "pg": "4.5.1",
     "serve-favicon": "~2.3.0"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-minify": "0.0.5",
-    "gulp-sass": "^2.2.0"
   }
 }

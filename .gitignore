@@ -1,2 +1,4 @@
 /node_modules/
-trlbdb
+/docs/
+.env
+latest.dump

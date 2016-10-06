@@ -2,13 +2,15 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 pg.defaults.ssl = true;
-var connectionString = process.env.DATABASE_URL;
-
+// var connectionString = process.env.DATABASE_URL;
+var connectionString = 'pg://postgres:password@localhost:5432/mydb';
 
 
 /* GET db info (recent) */
 router.get('/', function(req, res, next) {
   var data = {title: "tr/lb", loggedIn: true};
+  console.log("Hello", connectionString);
+
 
   var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
 FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
