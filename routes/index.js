@@ -3,13 +3,34 @@ var router = express.Router();
 var pg = require('pg');
 pg.defaults.ssl = true;
 var connectionString = process.env.DATABASE_URL;
+// var connectionString = "pg://postgres:password@localhost:5432/mydb";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var data = {};
-  data.title = "Bookmarks";
   data.loggedIn = true;
-  res.render('index', data);
+  console.log(connectionString);
+
+  // Get most recent 10 bookmarks from db
+  var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date \
+FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
+  pg.connect(connectionString, function(err, client, done) {
+    if (err) {
+      console.error(err);
+    }
+    else {
+      client.query(sql)
+      .on('row', function(row, results) {
+        results.addRow(row);
+      })
+      .on('end', function(results) {
+        data.rows = results.rows;
+        console.log(results.rows.length + ' rows were received');
+        res.render('index', data);
+      });
+    }
+    done();
+  });
 });
 
 router.post('/', function(req, res, next) {
