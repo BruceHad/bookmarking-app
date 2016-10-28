@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div(class="container")
+    div(class="row")
+      div(class="col col-6")
+        form(role="form", class="simple-form", action="/register",method="post", autocomplete="off", id="lastpass-search-off")
+          fieldset
+            label(for="username") Username
+            input(type="text", name="username", placeholder="Enter Username")
+            label(for="password") Password
+            input(type="password", name="password", placeholder="Enter Password")
+            input(type="submit", value="Register")

@@ -2,7 +2,6 @@ extends layout
 
 block content
   div(class="container")
-    h1 Bookmarks
     if loggedIn
       div(class="row")
         div(class="col col-6")
@@ -11,7 +10,7 @@ block content
             form(name="link", class="simple-form", action="/", method="post", autocomplete="off", id="lastpass-search-off")
               fieldset
                 label(for="url") Link
-                input(type="url", name="search", placeholder="URL", autofocus)
+                input(type="url", name="url", placeholder="URL", autofocus)
                 label(for="name") Name
                 input(type="text", name="name", placeholder="Name")
                 label(for="description") Description

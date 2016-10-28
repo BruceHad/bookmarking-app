@@ -2,6 +2,7 @@ html {
   box-sizing: border-box; 
 }
 
+
 *, *:before, *:after {
   box-sizing: inherit; 
 }
@@ -46,6 +47,27 @@ a:hover {
   text-decoration: none; 
 }
 
+header {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #EFEFEF;
+  color: #EFEFEF;
+}
+
+header h1 {
+  /*font-size: medium;*/
+  text-transform: uppercase;
+  margin:0; padding: 10px 0;
+}
+header p {
+  margin:0; padding:10px 0;
+  font-size: 1.3em;
+}
+
+header a {
+  color: white;
+  font-weight: bold;
+}
+
 /* Grid
 ------------------------------------------------------------*/
 .container {
@@ -83,7 +105,9 @@ form input {
   display: block; 
 }
 
-form input[type="text"], form input[type="url"] {
+form input[type="text"], 
+form input[type="password"], 
+form input[type="url"] {
   width: 100%;
   line-height: 2em;
   margin: 5px 0;

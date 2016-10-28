@@ -2,7 +2,9 @@
 
 February 2016
 
-NodeJS Bookmarking application that saves links provides JSON API for accessing the data.
+This a learning project.
+
+It's a simple 'bookmarking' application that saves links to a database and provides an interace for accessing the data.
 
 The bookmarking 'app' is an online interface for saving links: URL, Name, Description, Category and image. This information is then stored in the database. 
 
