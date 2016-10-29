@@ -19,17 +19,16 @@ block content
                 input(type="text", name="category", placeholder="Category")
               input(type="submit", value="Add Link")
         div(class="col col-6")
-          h2 API
-          p The app provides a few json endpoints to access the data.
-
-          h2 More
-          ul
-            li
-              a(href="/db") Recent Bookmarks
-            li
-              a(href="/db/categories") Categories
-            li
-              a(href="/db/months") Months
+          div(class="highlight")
+            h2 API
+            p Common JSON resources:
+            ul
+              li
+                a(href="/api/recent/10") Recent Bookmarks
+              li
+                a(href="/api/categories") Categories
+              li
+                a(href="/api/months") Months
       div(class="row")
         div(class="col")
           h2 Recent Bookmarks

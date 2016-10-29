@@ -17,11 +17,34 @@ router.get('/', function(req, res, next) {
     loggedIn: req.session.loggedIn,
     username: req.session.username,
   };
-  bookmarks.recent(res, data);
+  bookmarks.recent({}, function(results){
+    data.rows = results.rows;
+    res.render('index', data);
+  });
 });
 
 router.post('/', function(req, res, next) {
   bookmarks.add(res, req.body);
+});
+
+// API
+// ---
+router.get('/api/recent', function(req, res, next) {
+  bookmarks.recent({}, function(data){
+    res.send(JSON.stringify(data.rows));
+  });
+});
+
+router.get('/api/categories', function(req, res, next) {
+  bookmarks.categories({}, function(data){
+    res.send(JSON.stringify(data.rows));
+  });
+});
+
+router.get('/api/months', function(req, res, next) {
+  bookmarks.months({}, function(data){
+    res.send(JSON.stringify(data.rows));
+  });
 });
 
 
@@ -43,6 +66,12 @@ router.get('/login', function(req, res) {
   res.render('login');
 });
 
+router.get('/logout', function(req, res) {
+    req.session.loggedIn = false;
+    req.session.username = null;
+    res.redirect('/');
+});
+
 router.post('/login', function(req, res) {
   account.login(res, req.body, function(login, data){
     if(login){
@@ -54,12 +83,6 @@ router.post('/login', function(req, res) {
       res.render('login', {error: "Could not log you in"});
     }
   });
-});
-
-router.get('/logout', function(req, res) {
-    req.session.loggedIn = false;
-    req.session.username = null;
-    res.redirect('/');
 });
 
 

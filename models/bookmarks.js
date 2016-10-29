@@ -4,8 +4,12 @@ var connectionString = process.env.DATABASE_URL;
 
 var bookmarks = {};
 
-// Get most recent 10 bookmarks from db
-bookmarks.recent = function(res, data, next) {
+
+// Reading
+// -------
+
+// Get most recent n bookmarks from db
+bookmarks.recent = function(params, next) {
     var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
     pg.connect(connectionString, function(err, client) {
         if (err) {
@@ -16,14 +20,59 @@ bookmarks.recent = function(res, data, next) {
                     results.addRow(row);
                 })
                 .on('end', function(results) {
-                    data.rows = results.rows;
-                    res.render('index', data);
                     client.end();
+                    next(results);
+                });
+        }
+    });
+};
+// Get categories
+bookmarks.categories = function(params, next) {
+    var sql = "SELECT DISTINCT category FROM bookmarks ORDER BY category;";
+    pg.connect(connectionString, function(err, client) {
+        if (err) {
+            console.error(err);
+        } else {
+            client.query(sql)
+                .on('row', function(row, results) {
+                    results.addRow(row);
+                })
+                .on('end', function(results) {
+                    client.end();
+                    next(results);
                 });
         }
     });
 };
 
+
+bookmarks.months = function(params, next) {
+    var sql = "SELECT DISTINCT substring(bookmark_date from 0 for 8) bookmark_month,'../api/month/'||substring(bookmark_date from 0 for 5)||'/'||substring(bookmark_date from 6 for 2) link FROM bookmarks ORDER BY substring(bookmark_date from 0 for 8);";
+    pg.connect(connectionString, function(err, client) {
+        if (err) {
+            console.error(err);
+        } else {
+            client.query(sql)
+                .on('row', function(row, results) {
+                    results.addRow(row);
+                })
+                .on('end', function(results) {
+                    client.end();
+                    next(results);
+                });
+        }
+    });
+};
+
+
+
+
+
+// Writing
+// -------
+
+
+// Add
 bookmarks.add = function(res, data) {
     var today = new Date();
     console.log(data.url);
