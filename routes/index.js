@@ -14,10 +14,15 @@ router.get('/', function(req, res, next) {
     loggedIn: req.session.loggedIn,
     username: req.session.username,
   };
-  bookmarks.recent({}, function(results){
-    data.rows = results.rows;
+  if(data.loggedIn){
+    bookmarks.recent({number: 10}, function(results){
+      data.rows = results.rows;
+      res.render('index', data);
+    });
+  }
+  else {
     res.render('index', data);
-  });
+  }
 });
 
 router.post('/', function(req, res, next) {
