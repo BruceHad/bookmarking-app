@@ -10,7 +10,8 @@ var bookmarks = {};
 
 // Get most recent n bookmarks from db
 bookmarks.recent = function(params, next) {
-    var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
+    var n = params.number;
+    var sql = "SELECT bookmark_url, bookmark_name, description, category, bookmark_date FROM bookmarks ORDER BY bookmark_date desc LIMIT " + n;
     pg.connect(connectionString, function(err, client) {
         if (err) {
             console.error(err);

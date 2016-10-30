@@ -7,9 +7,6 @@ var bookmarks = require('../models/bookmarks.js');
 var connectionString = process.env.DATABASE_URL;
 
 
-
-
-
 // Home Page
 // ---------
 router.get('/', function(req, res, next) {
@@ -27,10 +24,16 @@ router.post('/', function(req, res, next) {
   bookmarks.add(res, req.body);
 });
 
+
+
+
 // API
 // ---
-router.get('/api/recent', function(req, res, next) {
-  bookmarks.recent({}, function(data){
+router.get('/api/recent/*', function(req, res, next) {
+  // set default
+  var n = req.params[0];
+  if (!(n > 0 && n <=100)) n = 10;
+  bookmarks.recent({number: n}, function(data){
     res.send(JSON.stringify(data.rows));
   });
 });
@@ -46,9 +49,6 @@ router.get('/api/months', function(req, res, next) {
     res.send(JSON.stringify(data.rows));
   });
 });
-
-
-
 
 
 
@@ -81,26 +81,6 @@ router.post('/login', function(req, res) {
     } else {
       req.session.loggedIn = false;
       res.render('login', {error: "Could not log you in"});
-    }
-  });
-});
-
-
-// Init
-// ----
-
-router.get('/init', function(req, res) {
-  // Initialise bookmarks table in database if it doesn't exist
-  pg.connect(connectionString, function(err, client) {
-    if (err) console.error(err);
-    else {
-      client.query(sql)
-      .on('error', function(error){console.error(error);})
-      .on('end', function(result) {
-        client.end();
-        console.log(result);
-        res.send('done');
-      });
     }
   });
 });
