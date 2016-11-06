@@ -28,10 +28,10 @@ FROM bookmarks ORDER BY bookmark_date desc LIMIT 10";
 
 /* Get category listing */
 router.get('/category/:cat', function(req, res, next){
-  console.log(req.params);
+  // console.log(req.params);
   var cat = req.params.cat;
   var sql = "SELECT * FROM bookmarks WHERE upper(category) = upper('"+cat+"');";
-  console.log(sql);
+  // console.log(sql);
   pg.connect(connectionString, function(err, client, done){
     if(err) console.error(err);
     else{
@@ -49,10 +49,10 @@ router.get('/category/:cat', function(req, res, next){
 
 /* Get Monthly Listing */
 router.get('/month/:year/:month', function(req, res, next){
-  console.log(req.params);
+  // console.log(req.params);
   var year = req.params.year, month = req.params.month;
   var sql = "SELECT * FROM bookmarks WHERE substring(bookmark_date from 0 for 5) = '"+year+"' AND substring(bookmark_date from 6 for 2) = '"+month+"';";
-  console.log(sql);
+  // console.log(sql);
   pg.connect(connectionString, function(err, client, done){
     if(err) console.error(err);
     else{
@@ -68,10 +68,11 @@ router.get('/month/:year/:month', function(req, res, next){
   })
 });
 
-/* Get Monthly Listing */
+/* Get Months */
 router.get('/all_months', function(req, res, next){
-  var year = req.params.year, month = req.params.month;
+  // var year = req.params.year, month = req.params.month;
   var sql = "SELECT DISTINCT substring(bookmark_date from 0 for 8) bookmark_month FROM bookmarks ORDER BY substring(bookmark_date from 0 for 8);";
+  console.log(sql);
   pg.connect(connectionString, function(err, client, done){
     if(err) console.error(err);
     else{

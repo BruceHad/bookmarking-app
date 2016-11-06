@@ -49,7 +49,7 @@ router.get('/api/categories', function(req, res, next) {
   });
 });
 
-router.get('/api/months', function(req, res, next) {
+router.get('/api/all_months', function(req, res, next) {
   bookmarks.months({}, function(data){
     res.send(JSON.stringify(data.rows));
   });
