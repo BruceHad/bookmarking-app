@@ -34,9 +34,9 @@ router.post('/', function(req, res, next) {
 
 // API
 // ---
-router.get('/api/recent/*', function(req, res, next) {
+router.get('/api/recent*', function(req, res, next) {
   // set default
-  var n = req.params[0];
+  var n = req.params[0].substring(1); // strip leading /
   if (!(n > 0 && n <=100)) n = 10;
   bookmarks.recent({number: n}, function(data){
     res.send(JSON.stringify(data.rows));
