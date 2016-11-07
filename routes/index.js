@@ -54,7 +54,11 @@ router.get('/api/all_months', function(req, res, next) {
     res.send(JSON.stringify(data.rows));
   });
 });
-
+router.get('/api/month/:year/:month', function(req, res, next){
+  bookmarks.month(req.params, function(data){
+    res.send(JSON.stringify(data.rows));
+  });
+});
 
 
 // Registration
