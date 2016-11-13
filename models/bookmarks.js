@@ -65,10 +65,11 @@ bookmarks.months = function(params, next) {
     });
 };
 
-bookmarks.month = function(params, next){
+bookmarks.month = function(params, next) {
     console.log(params);
-    var year = params.year, month = params.month;
-    var sql = "SELECT * FROM bookmarks WHERE substring(bookmark_date from 0 for 5) = '"+year+"' AND substring(bookmark_date from 6 for 2) = '"+month+"';";
+    var year = params.year,
+        month = params.month;
+    var sql = "SELECT * FROM bookmarks WHERE substring(bookmark_date from 0 for 5) = '" + year + "' AND substring(bookmark_date from 6 for 2) = '" + month + "';";
     pg.connect(connectionString, function(err, client) {
         if (err) {
             console.error(err);
@@ -82,9 +83,28 @@ bookmarks.month = function(params, next){
                     next(results);
                 });
         }
-    });  
+    });
 };
 
+bookmarks.category = function(params, next) {
+    var cat = params.cat;
+    var sql = "SELECT * FROM bookmarks WHERE upper(category) = upper('" + cat + "');";
+    // console.log(sql);
+    pg.connect(connectionString, function(err, client) {
+        if (err) {
+            console.error(err);
+        } else {
+            client.query(sql)
+                .on('row', function(row, results) {
+                    results.addRow(row);
+                })
+                .on('end', function(results) {
+                    client.end();
+                    next(results);
+                });
+        }
+    });
+};
 
 
 // Writing

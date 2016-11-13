@@ -60,6 +60,13 @@ router.get('/api/month/:year/:month', function(req, res, next){
   });
 });
 
+/* Get category listing */
+router.get('/api/category/:cat', function(req, res, next){
+  bookmarks.category(req.params, function(data){
+    res.send(JSON.stringify(data.rows));
+  });
+});
+
 
 // Registration
 // ------------
