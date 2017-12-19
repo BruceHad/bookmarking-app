@@ -1,0 +1,81 @@
+<div class="container">
+    {{#if loggedIn}}
+    <div class="row">
+        <div class="col col-md-6">
+            <form name="link" class="form-horizontal" action="/" method="post" autocomplete="off">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="url" class="col-sm-2 control-label">Link</label>
+                        <div class="col-sm-10">
+                            <input type="url" name="url" placeholder="URL" autofocus class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" placeholder="Name" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="description" placeholder="Description" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="col-sm-2 control-label">Category</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="category" placeholder="Category" class="form-control" required />
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Add New</button>
+                    </div>
+                </div>
+            </form>
+            {{#if message}}
+            <p>{{message}}</p>
+            {{/if}}
+        </div>
+        <div class="col col-md-6">
+            <p>The app provides a few json endpoints to access the data.</p>
+            <ul>
+                <li><a href="/api/recent">Recent Bookmarks</a></li>
+                <li><a href="/api/categories">Categories</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col col-12">
+            {{#if rows}}
+            <h2>Recent:</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>URL</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+                {{#each rows}}
+                <tr>
+                    <th>{{this.bookmark_url}}</th>
+                    <th>{{this.bookmark_name}}</th>
+                    <th>{{this.description}}</th>
+                    <th>{{this.category}}</th>
+                    <th>{{this.bookmark_date}}</th>
+                </tr>
+                {{/each}}
+            </table>
+            {{else}}
+            <p>{{message}}</p>
+            <div>{{error}}</div>
+            <p>If there is no bookmarks table the page probably needs initialising: <a href="/init">init</a></p>
+            {{/if}}
+        </div>
+    </div>
+    {{/if}}
+</div>

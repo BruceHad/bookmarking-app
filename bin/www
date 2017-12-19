@@ -1,11 +1,12 @@
 #!/usr/bin/env node
+require('dotenv').load(); // local .env file
 
 /**
  * Module dependencies.
  */
 
 var app = require('../app');
-var debug = require('debug')('app:server');
+var debug = require('debug')('ejs-skill-sharing:server');
 var http = require('http');
 
 /**
@@ -14,6 +15,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+console.log("Port: ", port);
 
 /**
  * Create HTTP server.

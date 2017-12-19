@@ -1,104 +1,105 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
-pg.defaults.ssl = true;
-var account = require('../models/account.js');
-var bookmarks = require('../models/bookmarks.js');
-var connectionString = process.env.DATABASE_URL;
+var sql = require('../models/model');
+var { Pool, Client } = require('pg')
+var connectionString = process.env.DATABASE_URL || 'postgres://ubuntu:pgpass@localhost:5432/bm';
 
+// client.defaults.ssl = true;
 
-// Home Page
-// ---------
+var date = new Date();
+var data = {
+    title: 'Bookmarking',
+    lastUpdated: date.toDateString(),
+    subtitle: 'Bookmarking application and API.'
+};
+
+data.loggedIn = true; // remove before pushing to live
+
+/** GET home page. */
 router.get('/', function(req, res, next) {
-  var data = {
-    loggedIn: req.session.loggedIn,
-    username: req.session.username,
-  };
-  if(data.loggedIn){
-    bookmarks.recent({number: 10}, function(results){
-      data.rows = results.rows;
-      res.render('index', data);
+    // Get most recent 10 bookmarks from db
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(sql.recent, function(error, response) {
+        if (error) {
+            data.message = 'Couldn\'t connect to db: ';
+            data.error = error;
+        }
+        else {
+            data.rows = response.rows;
+        }
+        client.end();
+        res.render('index', data);
     });
-  }
-  else {
-    res.render('index', data);
-  }
 });
 
+/** POST bookmark
+ */
 router.post('/', function(req, res, next) {
-  bookmarks.add(res, req.body);
+    // Get insert SQL query
+    var db = req.body;
+    var insert = sql.getInsert(db.url, db.name, db.description, db.category);
+
+    // Insert data into db.
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(insert, function(error, response) {
+        client.end();
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.redirect('/');
+        }
+    });
 });
 
-
-
-
-// API
-// ---
-router.get('/api/recent*', function(req, res, next) {
-  // set default
-  var n = req.params[0].substring(1); // strip leading /
-  if (!(n > 0 && n <=100)) n = 10;
-  bookmarks.recent({number: n}, function(data){
-    res.send(JSON.stringify(data.rows));
-  });
+/** Initialise database table */
+router.get('/init', function(req, res) {
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(sql.init, function(error, response) {
+        client.end();
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.redirect('/');
+        }
+    });
 });
 
-router.get('/api/categories', function(req, res, next) {
-  bookmarks.categories({}, function(data){
-    res.send(JSON.stringify(data.rows));
-  });
+/** GET categories JSON */
+router.get('/api/categories', function(req, res) {
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(sql.categories, function(error, response) {
+        client.end();
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.send(JSON.stringify(response.rows)); 
+        }
+        client.end();
+    });
 });
 
-router.get('/api/all_months', function(req, res, next) {
-  bookmarks.months({}, function(data){
-    res.send(JSON.stringify(data.rows));
-  });
-});
-router.get('/api/month/:year/:month', function(req, res, next){
-  bookmarks.month(req.params, function(data){
-    res.send(JSON.stringify(data.rows));
-  });
-});
-
-/* Get category listing */
-router.get('/api/category/:cat', function(req, res, next){
-  bookmarks.category(req.params, function(data){
-    res.send(JSON.stringify(data.rows));
-  });
-});
-
-
-// Registration
-// ------------
-
-// router.get('/registration', function(req, res) {
-//     res.render('registration', { });
-// });
-
-// router.post('/registration', function(req, res) {
-// });
-
-router.get('/login', function(req, res) {
-  res.render('login');
-});
-
-router.get('/logout', function(req, res) {
-    req.session.loggedIn = false;
-    req.session.username = null;
-    res.redirect('/');
-});
-
-router.post('/login', function(req, res) {
-  account.login(res, req.body, function(login, data){
-    if(login){
-      req.session.loggedIn = true;
-      req.session.username = data.username;
-      res.redirect('/');
-    } else {
-      req.session.loggedIn = false;
-      res.render('login', {error: "Could not log you in"});
-    }
-  });
+/** GET recent n bookmarks JSON */
+router.get('/api/recent/:number?', function(req, res, next) {
+    var n = req.params.number || 10; // default to 10
+    var recent = sql.getRecent(n);
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(recent, function(error, response) {
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.send(JSON.stringify(response.rows));
+        }
+        client.end();
+    });
 });
 
 module.exports = router;
