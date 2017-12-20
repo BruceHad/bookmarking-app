@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var sql = require('../models/model');
-var { Pool, Client } = require('pg')
-var connectionString = process.env.DATABASE_URL || 'postgres://ubuntu:pgpass@localhost:5432/bm';
+var { Client } = require('pg');
+var connectionString = process.env.DATABASE_URL;
 
 // client.defaults.ssl = true;
 
