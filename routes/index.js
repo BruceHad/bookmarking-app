@@ -99,4 +99,27 @@ router.get('/api/recent/:number?', function(req, res, next) {
     });
 });
 
+/** GET range n1 to n2 bookmarks JSON */
+router.get('/api/range/:from-:to?', function(req, res, next) {
+    var n1 = req.params.from;
+    var n2 = req.params.to;
+    if(n2 <= n1){
+        res.send("Error in range parameters");
+    }
+    console.log(sql.range);
+    var limit = n2 - n1 + 1;
+    var offset = n1 - 1;
+    var client = new Client({ connectionString: connectionString, });
+    client.connect();
+    client.query(sql.range, [limit, offset], function(error, response) {
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.send(JSON.stringify(response.rows));
+        }
+        client.end();
+    });
+});
+
 module.exports = router;
