@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
     // Get most recent 10 bookmarks from db
     var client = new Client({ connectionString: connectionString, });
     client.connect();
-    client.query(sql.recent, function(error, response) {
+    client.query(sql.recent, [10], function(error, response) {
         if (error) {
             data.message = 'Couldn\'t connect to db: ';
             data.error = error;
@@ -38,12 +38,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     // Get insert SQL query
     var db = req.body;
-    var insert = sql.getInsert(db.url, db.name, db.description, db.category);
-
     // Insert data into db.
     var client = new Client({ connectionString: connectionString, });
     client.connect();
-    client.query(insert, function(error, response) {
+    client.query(sql.insert, [db.url, db.name, db.description, db.category], function(error, response) {
         client.end();
         if (error) {
             res.send(error);
@@ -88,10 +86,9 @@ router.get('/api/categories', function(req, res) {
 /** GET recent n bookmarks JSON */
 router.get('/api/recent/:number?', function(req, res, next) {
     var n = req.params.number || 10; // default to 10
-    var recent = sql.getRecent(n);
     var client = new Client({ connectionString: connectionString, });
     client.connect();
-    client.query(recent, function(error, response) {
+    client.query(sql.recent, [n], function(error, response) {
         if (error) {
             res.send(error);
         }
