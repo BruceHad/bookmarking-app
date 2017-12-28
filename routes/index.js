@@ -10,13 +10,13 @@ var date = new Date();
 var data = {
     title: 'Bookmarking',
     lastUpdated: date.toDateString(),
-    subtitle: 'Bookmarking application and API.'
+    subtitle: 'Bookmarking application and API.',
+    loggedIn: false
 };
-
-data.loggedIn = true; // remove before pushing to live
 
 /** GET home page. */
 router.get('/', function(req, res, next) {
+    data.loggedIn = req.cookies.loggedIn;
     // Get most recent 10 bookmarks from db
     var client = new Client({ connectionString: connectionString, });
     client.connect();
@@ -36,6 +36,9 @@ router.get('/', function(req, res, next) {
 /** POST bookmark
  */
 router.post('/', function(req, res, next) {
+    if(!req.cookies.loggedIn){
+        return res.status(400).send('Not logged in!');
+    }
     // Get insert SQL query
     var db = req.body;
     // Insert data into db.
@@ -44,25 +47,28 @@ router.post('/', function(req, res, next) {
     client.query(sql.insert, [db.url, db.name, db.description, db.category], function(error, response) {
         client.end();
         if (error) {
-            res.send(error);
+            return res.send(error);
         }
         else {
-            res.redirect('/');
+            return res.redirect('/');
         }
     });
 });
 
 /** Initialise database table */
 router.get('/init', function(req, res) {
+    if(!req.cookies.loggedIn){
+        return res.status(400).send('Not logged in!');
+    }
     var client = new Client({ connectionString: connectionString, });
     client.connect();
     client.query(sql.init, function(error, response) {
         client.end();
         if (error) {
-            res.send(error);
+            return res.send(error);
         }
         else {
-            res.redirect('/');
+            return res.redirect('/');
         }
     });
 });
@@ -74,12 +80,11 @@ router.get('/api/categories', function(req, res) {
     client.query(sql.categories, function(error, response) {
         client.end();
         if (error) {
-            res.send(error);
+            return res.send(error);
         }
         else {
-            res.send(JSON.stringify(response.rows)); 
+            return res.send(JSON.stringify(response.rows)); 
         }
-        client.end();
     });
 });
 
@@ -89,13 +94,13 @@ router.get('/api/recent/:number?', function(req, res, next) {
     var client = new Client({ connectionString: connectionString, });
     client.connect();
     client.query(sql.recent, [n], function(error, response) {
+        client.end();
         if (error) {
-            res.send(error);
+            return res.send(error);
         }
         else {
-            res.send(JSON.stringify(response.rows));
+            return res.send(JSON.stringify(response.rows));
         }
-        client.end();
     });
 });
 
@@ -111,13 +116,13 @@ router.get('/api/range/:from-:to', function(req, res, next) {
     var client = new Client({ connectionString: connectionString, });
     client.connect();
     client.query(sql.range, [limit, offset], function(error, response) {
+        client.end();
         if (error) {
-            res.send(error);
+            return res.send(error);
         }
         else {
-            res.send(JSON.stringify(response.rows));
+            return res.send(JSON.stringify(response.rows));
         }
-        client.end();
     });
 });
 
