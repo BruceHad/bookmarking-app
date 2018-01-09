@@ -3,12 +3,17 @@ var path = require('path');
 // var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
+
 
 var index = require('./routes/index');
 var login = require('./routes/login');
 
+
+
 var app = express();
+app.use(session({secret: process.env.SECRET}));
 
 // Support CORS
   var allowCrossDomain = function(req, res, next) {

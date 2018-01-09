@@ -16,7 +16,14 @@ var data = {
 
 /** GET home page. */
 router.get('/', function(req, res, next) {
-    data.loggedIn = req.cookies.loggedIn;
+    console.log(req.session.username);
+    if (req.session.username) {
+        data.loggedIn = true;
+        data.username = req.session.username;
+    } else {
+        data.loggedIn = false;
+        data.username = null;
+    }
     // Get most recent 10 bookmarks from db
     var client = new Client({ connectionString: connectionString, });
     client.connect();
@@ -36,7 +43,7 @@ router.get('/', function(req, res, next) {
 /** POST bookmark
  */
 router.post('/', function(req, res, next) {
-    if(!req.cookies.loggedIn){
+    if (! req.session.username) {
         return res.status(400).send('Not logged in!');
     }
     // Get insert SQL query
@@ -57,7 +64,7 @@ router.post('/', function(req, res, next) {
 
 /** Initialise database table */
 router.get('/init', function(req, res) {
-    if(!req.cookies.loggedIn){
+    if (! req.session.username) {
         return res.status(400).send('Not logged in!');
     }
     var client = new Client({ connectionString: connectionString, });
